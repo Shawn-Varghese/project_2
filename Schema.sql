@@ -5,7 +5,16 @@
 -- To reset the sample schema, replace everything with
 -- two dots ('..' - without quotes).
 
- drop table if exists "Redfin" ;
+drop table if exists "Redfin" ;
+drop table if exists "Covid_Counties";
+drop table if exists "County_List"; 
+CREATE TABLE "County_List" (
+    "name" VARCHAR   NOT NULL,
+    "state" VARCHAR   NOT NULL,
+    "region" VARCHAR PRIMARY KEY  NOT NULL
+);
+
+drop table if exists "Redfin" ;
  CREATE TABLE "Redfin" (
      "period_begin" date   NOT NULL,
      "period_end" date   NOT NULL,
@@ -28,16 +37,23 @@
      "price_drops" decimal   NOT NULL,
      "off_market_in_two_weeks" decimal   NOT NULL,
      "parent_metro_region" VARCHAR   NOT NULL,
-     "parent_metro_region_metro_code" int   NOT NULL
+     "parent_metro_region_metro_code" int   NOT NULL,
+	 FOREIGN KEY("Region") REFERENCES "County_List" ("region")
  );
 
- drop table if exists "Covid_Counties";
+
+drop table if exists "Covid_Counties";
  CREATE TABLE "Covid_Counties" (
- 	"Index" int  NOT NULL,
-     "date" date  NOT NULL,
+ 	 "date" date  NOT NULL,
+	 "county" VARCHAR NOT NULL,
+	 "state" VARCHAR NOT NULL,
      "cases" int   NOT NULL,
      "deaths" decimal,
- 	"region" VARCHAR   NOT NULL,
-     "death_rate" decimal  
+ 	 "region" VARCHAR   NOT NULL,
+	 FOREIGN KEY("region") REFERENCES "County_List" ("region")
  );
+ 
+
+
+ 
 
